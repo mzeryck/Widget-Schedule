@@ -1,9 +1,9 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
-// icon-color: deep-brown; icon-glyph: magic;
+// icon-color: cyan; icon-glyph: clock;
 
 // Do not modify the following comment.
-// THIS_IS_SCHEDULE_WIDGET
+// THIS_IS_WIDGET_SCHEDULE
 
 class RowItem extends UITableRow {
   constructor(name) {
@@ -84,7 +84,7 @@ class Schedule {
   }
   
   async currentWidget(fm) {
-    const directoryPath = fm.joinPath(fm.documentsDirectory(), "Schedule Widget")
+    const directoryPath = fm.joinPath(fm.documentsDirectory(), "Widget Schedule")
     if (!fm.fileExists(directoryPath) || !fm.isDirectory(directoryPath)) fm.createDirectory(directoryPath)
     
     const name = this.times[Schedule.dateToIndex(new Date())] || this.defaultWidget
@@ -152,7 +152,7 @@ async function launch() {
 }
 
 async function setup() {
-  if (await generateAlert("Welcome to ScheduleWidget! Make sure your widget has the name you want before you begin.",['I like the name "' + Script.name() + '"', "Let me go change it"])) return
+  if (await generateAlert("Welcome to Widget Schedule! Make sure your widget has the name you want before you begin.",['I like the name "' + Script.name() + '"', "Let me go change it"])) return
   
   const defaultWidget = await promptForText("Default Widget","Choose the widget that will display by default when no other widgets are scheduled.")
   if (!defaultWidget) return await generateAlert("You need to enter the name of a widget.")
@@ -266,7 +266,7 @@ async function promptForScript(item) {
     if (fm.isFileStoredIniCloud(filePath)) await fm.downloadFileFromiCloud(filePath)
     const file = fm.readString(filePath)
     
-    if (file.includes("// THIS_IS_SCHEDULE_WIDGET")) continue
+    if (file.includes("// THIS_IS_WIDGET_SCHEDULE")) continue
     
     const row = new UITableRow()
     row.height = 55
