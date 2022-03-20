@@ -154,7 +154,8 @@ async function launch() {
 async function setup() {
   if (await generateAlert("Welcome to Widget Schedule! Make sure your widget has the name you want before you begin.",['I like the name "' + Script.name() + '"', "Let me go change it"])) return
   
-  const defaultWidget = await promptForText("Default Widget","Choose the widget that will display by default when no other widgets are scheduled.")
+  await generateAlert("On the next screen, choose the widget that will display by default when no other widgets are scheduled.")
+  const defaultWidget = await promptForScript()
   if (!defaultWidget) return await generateAlert("You need to enter the name of a widget.")
   
   schedule = new Schedule(defaultWidget)
@@ -249,7 +250,7 @@ async function addItem() {
   await updateSchedule(name, start, end-1)
 }
 
-async function promptForScript(item) {
+async function promptForScript() {
 
   const scripts = new UITable()
   scripts.showSeparators = true
@@ -327,7 +328,7 @@ async function pickTime(initial, min, max) {
   return Schedule.dateToIndex(time)
 }
 
-async updateCode() {
+async function updateCode() {
   let message = "The update failed. Please try again later."
   try {
     const codeString = await new Request("https://raw.githubusercontent.com/mzeryck/Widget-Schedule/main/widget-schedule.js").loadString()
